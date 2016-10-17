@@ -5,11 +5,14 @@
  */
 package resource.model;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 /**
  *
  * @author Desenvolvimento
  */
-public class Conta {
+public class Conta implements Serializable {
 
     private Usuario usuario;
     private String nome;
@@ -42,6 +45,10 @@ public class Conta {
 
     public Usuario getUsuario() {
         return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
 }

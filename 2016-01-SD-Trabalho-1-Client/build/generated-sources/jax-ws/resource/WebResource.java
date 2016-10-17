@@ -27,6 +27,84 @@ public interface WebResource {
 
     /**
      * 
+     * @param idUsuario
+     * @return
+     *     returns java.util.List<resource.ItemPedido>
+     */
+    @WebMethod(operationName = "listar_itens_pedido")
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "listar_itens_pedido", targetNamespace = "http://resource/", className = "resource.ListarItensPedido")
+    @ResponseWrapper(localName = "listar_itens_pedidoResponse", targetNamespace = "http://resource/", className = "resource.ListarItensPedidoResponse")
+    @Action(input = "http://resource/WebResource/listar_itens_pedidoRequest", output = "http://resource/WebResource/listar_itens_pedidoResponse")
+    public List<ItemPedido> listarItensPedido(
+        @WebParam(name = "id_usuario", targetNamespace = "")
+        long idUsuario);
+
+    /**
+     * 
+     * @param senha
+     * @param usuarioSistema
+     * @return
+     *     returns resource.Usuario
+     */
+    @WebMethod(operationName = "buscar_usuario")
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "buscar_usuario", targetNamespace = "http://resource/", className = "resource.BuscarUsuario")
+    @ResponseWrapper(localName = "buscar_usuarioResponse", targetNamespace = "http://resource/", className = "resource.BuscarUsuarioResponse")
+    @Action(input = "http://resource/WebResource/buscar_usuarioRequest", output = "http://resource/WebResource/buscar_usuarioResponse")
+    public Usuario buscarUsuario(
+        @WebParam(name = "usuario_sistema", targetNamespace = "")
+        String usuarioSistema,
+        @WebParam(name = "senha", targetNamespace = "")
+        String senha);
+
+    /**
+     * 
+     * @return
+     *     returns java.util.List<resource.Usuario>
+     */
+    @WebMethod(operationName = "listar_usuarios")
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "listar_usuarios", targetNamespace = "http://resource/", className = "resource.ListarUsuarios")
+    @ResponseWrapper(localName = "listar_usuariosResponse", targetNamespace = "http://resource/", className = "resource.ListarUsuariosResponse")
+    @Action(input = "http://resource/WebResource/listar_usuariosRequest", output = "http://resource/WebResource/listar_usuariosResponse")
+    public List<Usuario> listarUsuarios();
+
+    /**
+     * 
+     * @param indiceItem
+     * @param idUsuario
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod(operationName = "remover_item")
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "remover_item", targetNamespace = "http://resource/", className = "resource.RemoverItem")
+    @ResponseWrapper(localName = "remover_itemResponse", targetNamespace = "http://resource/", className = "resource.RemoverItemResponse")
+    @Action(input = "http://resource/WebResource/remover_itemRequest", output = "http://resource/WebResource/remover_itemResponse")
+    public String removerItem(
+        @WebParam(name = "id_usuario", targetNamespace = "")
+        long idUsuario,
+        @WebParam(name = "indice_item", targetNamespace = "")
+        int indiceItem);
+
+    /**
+     * 
+     * @param idUsuario
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod(operationName = "finalizar_pedido")
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "finalizar_pedido", targetNamespace = "http://resource/", className = "resource.FinalizarPedido")
+    @ResponseWrapper(localName = "finalizar_pedidoResponse", targetNamespace = "http://resource/", className = "resource.FinalizarPedidoResponse")
+    @Action(input = "http://resource/WebResource/finalizar_pedidoRequest", output = "http://resource/WebResource/finalizar_pedidoResponse")
+    public String finalizarPedido(
+        @WebParam(name = "id_usuario", targetNamespace = "")
+        long idUsuario);
+
+    /**
+     * 
      * @return
      *     returns java.util.List<resource.Item>
      */
@@ -57,32 +135,53 @@ public interface WebResource {
 
     /**
      * 
+     * @param qtdItem
+     * @param idUsuario
+     * @param idItem
      * @return
-     *     returns java.util.List<resource.Usuario>
+     *     returns java.lang.String
      */
-    @WebMethod(operationName = "listar_usuarios")
+    @WebMethod(operationName = "incluir_item")
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "listar_usuarios", targetNamespace = "http://resource/", className = "resource.ListarUsuarios")
-    @ResponseWrapper(localName = "listar_usuariosResponse", targetNamespace = "http://resource/", className = "resource.ListarUsuariosResponse")
-    @Action(input = "http://resource/WebResource/listar_usuariosRequest", output = "http://resource/WebResource/listar_usuariosResponse")
-    public List<Usuario> listarUsuarios();
+    @RequestWrapper(localName = "incluir_item", targetNamespace = "http://resource/", className = "resource.IncluirItem")
+    @ResponseWrapper(localName = "incluir_itemResponse", targetNamespace = "http://resource/", className = "resource.IncluirItemResponse")
+    @Action(input = "http://resource/WebResource/incluir_itemRequest", output = "http://resource/WebResource/incluir_itemResponse")
+    public String incluirItem(
+        @WebParam(name = "id_usuario", targetNamespace = "")
+        long idUsuario,
+        @WebParam(name = "id_item", targetNamespace = "")
+        int idItem,
+        @WebParam(name = "qtd_item", targetNamespace = "")
+        int qtdItem);
 
     /**
      * 
-     * @param senha
-     * @param usuarioSistema
+     * @param idUsuario
      * @return
-     *     returns resource.Usuario
+     *     returns resource.Pedido
      */
-    @WebMethod(operationName = "buscar_usuario")
+    @WebMethod(operationName = "buscar_pedido")
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "buscar_usuario", targetNamespace = "http://resource/", className = "resource.BuscarUsuario")
-    @ResponseWrapper(localName = "buscar_usuarioResponse", targetNamespace = "http://resource/", className = "resource.BuscarUsuarioResponse")
-    @Action(input = "http://resource/WebResource/buscar_usuarioRequest", output = "http://resource/WebResource/buscar_usuarioResponse")
-    public Usuario buscarUsuario(
-        @WebParam(name = "usuario_sistema", targetNamespace = "")
-        String usuarioSistema,
-        @WebParam(name = "senha", targetNamespace = "")
-        String senha);
+    @RequestWrapper(localName = "buscar_pedido", targetNamespace = "http://resource/", className = "resource.BuscarPedido")
+    @ResponseWrapper(localName = "buscar_pedidoResponse", targetNamespace = "http://resource/", className = "resource.BuscarPedidoResponse")
+    @Action(input = "http://resource/WebResource/buscar_pedidoRequest", output = "http://resource/WebResource/buscar_pedidoResponse")
+    public Pedido buscarPedido(
+        @WebParam(name = "id_usuario", targetNamespace = "")
+        long idUsuario);
+
+    /**
+     * 
+     * @param idUsuario
+     * @return
+     *     returns double
+     */
+    @WebMethod(operationName = "get_saldo")
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "get_saldo", targetNamespace = "http://resource/", className = "resource.GetSaldo")
+    @ResponseWrapper(localName = "get_saldoResponse", targetNamespace = "http://resource/", className = "resource.GetSaldoResponse")
+    @Action(input = "http://resource/WebResource/get_saldoRequest", output = "http://resource/WebResource/get_saldoResponse")
+    public double getSaldo(
+        @WebParam(name = "id_usuario", targetNamespace = "")
+        long idUsuario);
 
 }

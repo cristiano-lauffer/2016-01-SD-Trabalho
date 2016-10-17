@@ -32,7 +32,7 @@ public class MainUI {
                         break;
                     case MainMenu.OP_CARDAPIO:
                         if (idUsuario != -1)
-                            new CardapioUI().executar(idUsuario);
+                            new PedidoUI().executar(idUsuario);
                         else
                             System.out.println("Favor efetuar o login!");
                         break;

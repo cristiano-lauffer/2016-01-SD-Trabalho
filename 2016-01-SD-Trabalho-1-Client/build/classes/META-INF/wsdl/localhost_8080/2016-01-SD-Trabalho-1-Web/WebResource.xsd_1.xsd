@@ -1,5 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.3 (tags/2.3-7528; 2013-04-29T19:34:10+0000) JAXWS-RI/2.2.8 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://resource/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://resource/">
 
+<xs:element name="buscar_pedido" type="tns:buscar_pedido"/>
+
+<xs:element name="buscar_pedidoResponse" type="tns:buscar_pedidoResponse"/>
+
 <xs:element name="buscar_usuario" type="tns:buscar_usuario"/>
 
 <xs:element name="buscar_usuarioResponse" type="tns:buscar_usuarioResponse"/>
@@ -8,13 +12,33 @@
 
 <xs:element name="comprar_itemResponse" type="tns:comprar_itemResponse"/>
 
+<xs:element name="finalizar_pedido" type="tns:finalizar_pedido"/>
+
+<xs:element name="finalizar_pedidoResponse" type="tns:finalizar_pedidoResponse"/>
+
+<xs:element name="get_saldo" type="tns:get_saldo"/>
+
+<xs:element name="get_saldoResponse" type="tns:get_saldoResponse"/>
+
+<xs:element name="incluir_item" type="tns:incluir_item"/>
+
+<xs:element name="incluir_itemResponse" type="tns:incluir_itemResponse"/>
+
 <xs:element name="listar_itens" type="tns:listar_itens"/>
 
 <xs:element name="listar_itensResponse" type="tns:listar_itensResponse"/>
 
+<xs:element name="listar_itens_pedido" type="tns:listar_itens_pedido"/>
+
+<xs:element name="listar_itens_pedidoResponse" type="tns:listar_itens_pedidoResponse"/>
+
 <xs:element name="listar_usuarios" type="tns:listar_usuarios"/>
 
 <xs:element name="listar_usuariosResponse" type="tns:listar_usuariosResponse"/>
+
+<xs:element name="remover_item" type="tns:remover_item"/>
+
+<xs:element name="remover_itemResponse" type="tns:remover_itemResponse"/>
 
 <xs:complexType name="buscar_usuario">
 <xs:sequence>
@@ -53,6 +77,104 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="incluir_item">
+<xs:sequence>
+<xs:element name="id_usuario" type="xs:long"/>
+<xs:element name="id_item" type="xs:int"/>
+<xs:element name="qtd_item" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="incluir_itemResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="get_saldo">
+<xs:sequence>
+<xs:element name="id_usuario" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="get_saldoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="finalizar_pedido">
+<xs:sequence>
+<xs:element name="id_usuario" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="finalizar_pedidoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="buscar_pedido">
+<xs:sequence>
+<xs:element name="id_usuario" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="buscar_pedidoResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:pedido" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="pedido">
+<xs:sequence>
+<xs:element name="id" type="xs:int"/>
+<xs:element name="listaItens" type="tns:itemPedido" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="usuario" type="tns:usuario" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="itemPedido">
+<xs:sequence>
+<xs:element name="item" type="tns:item" minOccurs="0"/>
+<xs:element name="quantidade" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="item">
+<xs:sequence>
+<xs:element name="id" type="xs:int"/>
+<xs:element name="nome" type="xs:string" minOccurs="0"/>
+<xs:element name="valor" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="remover_item">
+<xs:sequence>
+<xs:element name="id_usuario" type="xs:long"/>
+<xs:element name="indice_item" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="remover_itemResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listar_itens_pedido">
+<xs:sequence>
+<xs:element name="id_usuario" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listar_itens_pedidoResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:itemPedido" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="listar_usuarios">
 <xs:sequence/>
 </xs:complexType>
@@ -70,14 +192,6 @@
 <xs:complexType name="listar_itensResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:item" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="item">
-<xs:sequence>
-<xs:element name="id" type="xs:int"/>
-<xs:element name="nome" type="xs:string" minOccurs="0"/>
-<xs:element name="valor" type="xs:double"/>
 </xs:sequence>
 </xs:complexType>
 </xs:schema>

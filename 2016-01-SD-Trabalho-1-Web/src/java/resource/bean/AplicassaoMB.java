@@ -10,6 +10,7 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import resource.model.Conta;
 import resource.model.Item;
+import resource.model.Pedido;
 import resource.model.Usuario;
 
 /**
@@ -23,6 +24,7 @@ public class AplicassaoMB {
     private ArrayList<Usuario> listaUsuarios;
     private ArrayList<Item> listaItens;
     private ArrayList<Conta> listaContas;
+    private ArrayList<Pedido> listaPedidos;
 
     /**
      * Creates a new instance of AplicassaoMB
@@ -42,6 +44,8 @@ public class AplicassaoMB {
         for (Usuario usuario : listaUsuarios) {
             listaContas.add(new Conta(usuario, "conta-" + usuario.getUsuarioSistema(), 20.00));
         }
+
+        listaPedidos = new ArrayList<Pedido>();
     }
 
     public ArrayList<Usuario> getListaUsuarios() {
@@ -89,7 +93,7 @@ public class AplicassaoMB {
 
         return objUsuario;
     }
-    
+
     public Usuario BuscarUsuarioPorId(long id) {
         Usuario objUsuario = null;
 
@@ -102,7 +106,7 @@ public class AplicassaoMB {
 
         return objUsuario;
     }
-    
+
     public Item BuscarItemPorId(long id) {
         Item objItem = null;
 
@@ -127,5 +131,50 @@ public class AplicassaoMB {
         }
 
         return objConta;
+    }
+
+    public double getSaldo(long idUsuario) {
+        double dblRetorno = 0;
+
+        Usuario usuario = this.BuscarUsuarioPorId(idUsuario);
+        Conta conta = null;
+        if (usuario != null) {
+            conta = this.BuscarContaPorUsuario(usuario);
+            dblRetorno = conta.getSaldo();
+        }
+
+        return dblRetorno;
+    }
+
+    public Pedido BuscarPedido(Usuario usuario) {
+        Pedido objPedido = null;
+
+        for (Pedido pedido : this.listaPedidos) {
+            if (pedido.getUsuario().getId() == usuario.getId()) {
+                objPedido = pedido;
+                break;
+            }
+        }
+
+        //se nao encontrar o pedido, cria um
+        if (objPedido == null) {
+            objPedido = new Pedido(usuario);
+            this.listaPedidos.add(objPedido);
+        }
+
+        return objPedido;
+    }
+
+    public Pedido removerPedido(Pedido pedido) {
+        int indicePedido = 0;
+        int indiceRemover = 0;
+        for (Pedido objPedido : this.listaPedidos) {
+            if (objPedido.getId() == pedido.getId()) {
+                indiceRemover = indicePedido;
+                break;
+            }
+            indicePedido++;
+        }
+        return this.listaPedidos.remove(indiceRemover);
     }
 }

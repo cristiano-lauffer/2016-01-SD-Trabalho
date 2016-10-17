@@ -5,13 +5,14 @@
  */
 package resource.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  * @author Cristiano
  */
-public class Usuario {
+public class Usuario implements Serializable {
 
     private static int idGenerated = 0;
     private int id;
